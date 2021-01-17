@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latihan GSAP Scroll</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    header,
+    footer {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    header h1,
+    footer h1 {
+      font-size: 60px;
+    }
+
+    .animation,
+    .about,
+    .ball-animate {
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .animation {
+      background-color: aquamarine;
+    }
+
+    .about {
+      background-color: burlywood;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ball-animate {
+      background-color: rgb(20, 20, 20);
+    }
+
+    .ball {
+      width: 100px;
+      height: 100px;
+      border: 15px solid grey;
+      border-radius: 50%;
+      background-color: white;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      animation: ball 1s ease-in-out infinite;
+    }
+
+    @keyframes ball {
+
+      0%,
+      100% {
+        filter: hue-rotate(360deg);
+      }
+
+      50% {
+        filter: hue-rotate(0deg);
+      }
+
+    }
+
+    .card {
+      padding: 20px;
+      background: white;
+      position: absolute;
+      top: 50%;
+      left: 0;
+    }
+
+
+    .animation .plane {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Scroll Animation</h1>
+    <h2>GSAP PLUGIN</h2>
+  </header>
+
+  <section class="animation">
+    <img src="plane.png" alt="" class="plane">
+  </section>
+
+  <section class="about">
+    <div class="card">
+      <h2>Hello World</h2>
+    </div>
+  </section>
+
+  <section class="ball-animate">
+    <div class="ball"></div>
+  </section>
+  <footer>
+    <h1>End Scroll</h1>
+    <small>Build by @<a href="https://www.instagram.com/arozqq" style="color: black;"
+        target="__blank">arozqq</a></small>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/ScrollMagic.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/debug.addIndicators.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.8/plugins/animation.gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenLite.min.js"
+    integrity="sha512-pvDW4tehKKsohH97164HwKwRGFpzayEFWTVbk8HuUoLIQ7Jp+WLN5XYokVuoCj2aT6dy8ihbW8SRTG1k0W4mSQ=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TimelineLite.min.js"
+    integrity="sha512-tSIDeirKC6suYILHqqPuZH3s0MvD4a5vCHXhBIcdmq4gQXZ2IB3fEYA5x2f3D2p/CbSqzKEvuTEVbS5VZ2u+ew=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TimelineMax.min.js"
+    integrity="sha512-MBKN+F1LTtgzsnhh92u6fEklbJbv13vKI/2BZP0LLR8+IMeqlp0h10R6afWaJv2HIJfTOQkjW0LCPrIFEkZVeg=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/CSSPlugin.min.js"
+    integrity="sha512-ocsFo48WU8Xq6Y1Lwi7psXRAujG9E4TKNR4q1DbrKzaaxOMTEoao/a+mDoB+cYzY4lwbyxvqjkp/ZA1/MNlfsg=="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/plugins/BezierPlugin.min.js"
+    integrity="sha512-plyexAULVlTExvDn2yUZFJV9F8q+53MC/GpU9dEuNGXmrrI3J8Rcffjvxg3OOBALBvF+UILPLIBEoCeF2maqTQ=="
+    crossorigin="anonymous"></script>
+
+  <script>
+    const controller = new ScrollMagic.Controller(); //assign plugin controler ScrollMagic
+
+    // assign BezierPlugin dan pembuatan 
+    const planePath = {
+      curviness: 1.25,
+      autoRotate: true,
+      values: [
+        { x: 100, y: -20 },
+        { x: 300, y: -10 },
+        { x: 500, y: 100 },
+        { x: 750, y: -100 },
+        { x: 350, y: -50 },
+        { x: 600, y: 100 },
+        { x: 800, y: 120 },
+        { x: window.innerWidth, y: -150 },
+      ]
+    }
+
+    const cardPath = {
+      curviness: 1.2,
+      autoRotate: false,
+      values: [
+        { x: 550, y: 200, },
+        { x: window.innerWidth, y: -200 }
+      ]
+    }
+
+    // assign plugin TweenLite dan TimelineMax sesuai kebutuhan
+    const tween = new TimelineLite();
+    const tween2 = new TimelineLite();
+    const ball = new TimelineMax();
+
+    tween.add(
+      TweenLite.to('.plane', 1, {
+        bezier: planePath,
+        ease: Power1.easeInOut
+      })
+    );
+
+    tween2.add(
+      TweenLite.to('.card', 1, {
+        bezier: cardPath,
+        ease: Power1.easeInOut
+      })
+    );
+
+    // Dengan TweenlineMax bisa custom style
+    ball.from('.ball', 1, { x: -200, opacity: 0, ease: Power1.easeInOut, scale: 0 })
+    ball.to('.ball', .5, { x: window.innerWidth + 40, y: '-300', scale: 2, backgroundColor: 'green', ease: Power1.easeInOut })
+
+
+
+    // ======== Pemanggilan Scene dan elemen yang udah diinialiasikan diatass ===== //
+
+    const scene1 = new ScrollMagic.Scene({
+      // triggernya dari element section class animation
+      triggerElement: '.animation',
+      duration: 5000,
+      triggerHook: 0
+    })
+      .setTween(tween)
+      // .addIndicators()
+      .setPin('.animation')
+      .addTo(controller);
+
+    const scene2 = new ScrollMagic.Scene({
+      // triggernya dari element section class animation
+      triggerElement: '.about',
+      duration: 5000,
+      triggerHook: 0
+    })
+      .setTween(tween2)
+      // .addIndicators()
+      .setPin('.about')
+      .addTo(controller);
+
+    const scene3 = new ScrollMagic.Scene({
+      triggerElement: '.ball-animate',
+      // triggerHook: "onLeave",
+      triggerHook: 0,
+      // duration: "100%"
+      duration: 2000
+    })
+      // .addIndicators() //buat nambahin debug "Matiin Commentnya kalo mau dipake"
+      .setPin('.ball-animate') //buat ngasih tau scene elemen mana yg di ScrollMagic
+      .setTween(ball) //manggil variable yang udah dicustom pake plugin timeLineMax atau timelineLite atau keduanya
+      .addTo(controller); // manggil plugin controller ScorllMagic gsap
+
+  </script>
+
+</body>
+
+</html>
